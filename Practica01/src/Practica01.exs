@@ -1,8 +1,8 @@
 # Participantes:
 # Angel Alcántara Valdés
 # Mauricio Ayala Morales
-# Haernández Sanchez Oscar Jose
-#
+# Hernández Sanchez Oscar Jose
+# Madera Baldovinos Erika Yusset
 
 defmodule Practica01 do
 
