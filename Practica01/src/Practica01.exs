@@ -76,7 +76,7 @@ defmodule Practica01 do
 	end
 
 	# Función recursiva que calcula la suma de Gauss (Caso recursivo).
-	def gaussRecursivo(n) when is_number(n) and n >=0 do
+	def gaussRecursivo(n) when is_number(n) and n > 0 do
 			n + gaussRecursivo(n - 1)
 	end
 
