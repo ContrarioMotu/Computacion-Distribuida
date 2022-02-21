@@ -1,7 +1,7 @@
 # Participantes:
 # Angel Alcántara Valdés
 # Mauricio Ayala Morales
-#
+# Haernández Sanchez Oscar Jose
 #
 
 defmodule Practica01 do
