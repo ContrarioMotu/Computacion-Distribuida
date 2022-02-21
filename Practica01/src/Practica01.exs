@@ -1,3 +1,9 @@
+# Participantes:
+# Angel Alcántara Valdés
+#
+#
+#
+
 defmodule Practica01 do
 
 	def cuadruple(n) when is_number(n) do
