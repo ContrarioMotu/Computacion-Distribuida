@@ -16,3 +16,23 @@ def ejercicio2(str, e, n, index) do
 n_strings(n,str) |> insert_into_list(index,e)
 end
 end
+
+#definir un último modulo con las siguientes funciones:
+
+defmodule Ultimo do
+import Practica02, except: [distance: 4]
+
+#funcion que dado un map y un índice, elimina la lista generada
+#por el map, el elemento en el indice dado
+
+def parte_A(map,index) do
+map_to_list(map) |> remove_from_list(index)
+end
+
+#funcion que dada una tupla y un valor, agrega el valor a la tupla, pasa
+#la tupla a lista y regresa el último elemento de esta lista
+
+def parte_B(tupla, valor) do
+element_into_tuple(tupla, valor) |> tuple_to_list() |> last_element()
+end
+end
