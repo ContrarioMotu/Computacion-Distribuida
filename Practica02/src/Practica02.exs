@@ -55,9 +55,9 @@ defmodule Practica02 do
   end
 
   #9
-  def element_into_tuple(tuple, index, element) do
-    import Tuple, only: [put_elem: 3]
-    put_elem(tuple, index, element)
+  def element_into_tuple(tuple, element) do
+    import Tuple, only: [append: 2]
+    append(tuple, element)
   end
 
   #10
