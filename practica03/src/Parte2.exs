@@ -15,7 +15,7 @@ defmodule Parte2 do
 	reverse(l,[])
   end
 
-  #1
+  # 1 Implementación de split/
   defp split_rec(left, [], _count) do
 	{reverse(left),[]}
   end
@@ -29,7 +29,7 @@ defmodule Parte2 do
 	split_rec([], l, split_ind)
   end
 
-  #2
+  # 2 Implementación de all?/2
   def all?([], _fun) do
 	true
   end
@@ -41,7 +41,7 @@ defmodule Parte2 do
 	end
   end
 
-  #3
+  # 3 Implementación de filter recursivo.
   defp filter_rec([], res, _test) do
 	reverse(res)
   end
