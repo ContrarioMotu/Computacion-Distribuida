@@ -4,7 +4,7 @@ Participantes:
 - Hernandez Sanchez Oscar José
 - Madera Baldovinos Erika Yusset
 
-🌷 Instrucciones de ejecución para Parte 3 🌷
+🌷 Instrucciones de ejecución para Parte 3 (Java)🌷
 
 𝟙.- Desde la carpeta "src" compilar los archivos Parte3.java y Proceso.java:
 
