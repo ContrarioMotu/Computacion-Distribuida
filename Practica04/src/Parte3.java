@@ -1,17 +1,16 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.LinkedList;
 
 public class Parte3 {
     
-    private LinkedList<Proceso> procesos = new LinkedList<Proceso>();
+    private LinkedList<Evento> eventos = new LinkedList<Evento>();
 
-    private LinkedList<Proceso> schedule = new LinkedList<Proceso>();
+    private LinkedList<Evento> schedule = new LinkedList<Evento>();
 
-    private void leerProcesos(String path){
+    private void leerEventos(String path){
 
         try{
             File archivo = new File(path);
@@ -23,12 +22,12 @@ public class Parte3 {
             while ((line = input.readLine()) != null) {
                 String[] l = line.split(",");
 
-                this.procesos.add(new Proceso(l[0], Integer.parseInt(l[1]), Integer.parseInt(l[2])));
+                this.eventos.add(new Evento(l[0], Integer.parseInt(l[1]), Integer.parseInt(l[2])));
             }
             
             input.close();
 
-            if(procesos.isEmpty()){
+            if(eventos.isEmpty()){
                 throw new Exception("\n" + "Archivo vacío...");
             }
 
@@ -44,15 +43,15 @@ public class Parte3 {
     }
 
     public void schedule(){
-        LinkedList<Proceso> procesosOrdenados = new LinkedList<Proceso>(procesos);
+        LinkedList<Evento> eventosOrdenados = new LinkedList<Evento>(eventos);
 
-        procesosOrdenados.sort((p, q) -> p.compareTo(q));
+        eventosOrdenados.sort((p, q) -> p.compareTo(q));
 
-        Proceso pFinal = procesosOrdenados.getFirst();
+        Evento pFinal = eventosOrdenados.getFirst();
         this.schedule.add(pFinal);
 
-        for(Proceso p : procesosOrdenados){
-            if(p.getInicio() >= pFinal.getfin()){
+        for(Evento p : eventosOrdenados){
+            if(p.getInicio() >= pFinal.getFin()){
 
                 this.schedule.add(p);
 
@@ -63,7 +62,7 @@ public class Parte3 {
         
     }
 
-    public LinkedList<Proceso> getSchedule(){
+    public LinkedList<Evento> getSchedule(){
         return this.schedule;
     }
 
@@ -72,7 +71,7 @@ public class Parte3 {
 
         int nombreMasLargo = 1;
 
-        for(Proceso p : procesos){
+        for(Evento p : eventos){
 
             if(p.getNombre().length() > nombreMasLargo){
                 nombreMasLargo = p.getNombre().length();
@@ -81,14 +80,14 @@ public class Parte3 {
 
         String s = " ".repeat(nombreMasLargo + 4);
 
-        for(int i = procesos.getFirst().getInicio();
-            i <= procesos.getLast().getfin(); i++){
+        for(int i = eventos.getFirst().getInicio();
+            i <= eventos.getLast().getFin(); i++){
 
                 s += String.format("%02d ", i);
         }
         s += "\n";
 
-        for(Proceso p : procesos){
+        for(Evento p : eventos){
             s += p.getNombre() + " ".repeat(nombreMasLargo - p.getNombre().length()) + " =>  ";
 
             for (int j = 1; j < p.getInicio(); j++) {
@@ -97,7 +96,7 @@ public class Parte3 {
 
             s += "|";
 
-            for (int k = p.getInicio(); k < p.getfin() - 1; k++) {
+            for (int k = p.getInicio(); k < p.getFin() - 1; k++) {
                 s += "---";
             }
 
@@ -111,16 +110,16 @@ public class Parte3 {
 
         int nombreMasLargo = 1;
 
-        for(Proceso p : procesos){
+        for(Evento p : eventos){
 
             if(p.getNombre().length() > nombreMasLargo){
                 nombreMasLargo = p.getNombre().length();
             }
         }
 
-        int primerInicio = procesos.getFirst().getInicio();
+        int primerInicio = eventos.getFirst().getInicio();
 
-        for (Proceso p : procesos) {
+        for (Evento p : eventos) {
             if(p.getInicio() < primerInicio){
                 primerInicio = p.getInicio();
             }
@@ -128,9 +127,9 @@ public class Parte3 {
 
         int ultimoFinal = 1;
 
-        for (Proceso p : procesos) {
-            if(p.getfin() > ultimoFinal){
-                ultimoFinal = p.getfin();
+        for (Evento p : eventos) {
+            if(p.getFin() > ultimoFinal){
+                ultimoFinal = p.getFin();
             }
         }
 
@@ -143,7 +142,7 @@ public class Parte3 {
         }
         s += "\n";
 
-        for(Proceso p : procesos){
+        for(Evento p : eventos){
             s += p.getNombre() + " ".repeat(nombreMasLargo - p.getNombre().length()) + " =>  ";
 
             for (int j = 1; j < p.getInicio(); j++) {
@@ -152,7 +151,7 @@ public class Parte3 {
 
             s += "|";
             if(schedule.contains(p)){
-                for (int k = p.getInicio(); k < p.getfin() - 1; k++) {
+                for (int k = p.getInicio(); k < p.getFin() - 1; k++) {
                     s += "~~~";
                 }
 
@@ -160,7 +159,7 @@ public class Parte3 {
                 continue;
             }
 
-            for (int k = p.getInicio(); k < p.getfin() - 1; k++) {
+            for (int k = p.getInicio(); k < p.getFin() - 1; k++) {
                 s += "---";
             }
 
@@ -176,7 +175,7 @@ public class Parte3 {
         try{
             Parte3 p = new Parte3();
 
-            p.leerProcesos(args[0]);
+            p.leerEventos(args[0]);
 
             p.schedule();
 
@@ -184,7 +183,7 @@ public class Parte3 {
             System.out.println(p.toStringSchedule());
         }catch(ArrayIndexOutOfBoundsException aiobe){
             System.err.println("\n" + 
-                               "Ingrese el nombre del archivo con los procesos.\n" +
+                               "Ingrese el nombre del archivo con los eventos.\n" +
                                "Uso:\n" + 
                                "$ java Parte3 \"archivo.txt\"\n");
             System.exit(1);

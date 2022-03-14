@@ -1,7 +1,4 @@
-import java.util.Comparator;
-import java.util.jar.Attributes.Name;
-
-public class Proceso{
+public class Evento{
     
     private String nombre;
 
@@ -9,14 +6,14 @@ public class Proceso{
 
     private int fin;
 
-    public Proceso(String nombre, int inicio, int fin) throws Exception{
+    public Evento(String nombre, int inicio, int fin) throws Exception{
 
         if(fin <= inicio){
-            throw new IllegalArgumentException("\n" + "El final del proceso " + nombre + " no puede ser menor o igual al inicio...");
+            throw new IllegalArgumentException("\n" + "El final del evento " + nombre + " no puede ser menor o igual al inicio...");
         }
 
         if(inicio < 1 || fin < 1){
-            throw new IllegalArgumentException("\n" + "Ni el final ni el inicio del proceso " + nombre + " pueden ser negativos...");
+            throw new IllegalArgumentException("\n" + "Ni el final ni el inicio del evento " + nombre + " pueden ser negativos...");
         }
         
         this.nombre = nombre;
@@ -33,7 +30,7 @@ public class Proceso{
         return this.inicio;
     }
 
-    public int getfin(){
+    public int getFin(){
         return this.fin;
     }
 
@@ -49,7 +46,7 @@ public class Proceso{
         this.fin = f;
     }
 
-    public int compareTo(Proceso pr){
+    public int compareTo(Evento pr){
         if(this.fin == pr.fin){
             return 0;
         }
@@ -63,7 +60,7 @@ public class Proceso{
 
     @Override
     public String toString(){
-        return this.nombre;
+        return this.nombre + "(" + this.inicio + ", " + this.fin + ")";
     }
 
 }
