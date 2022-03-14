@@ -4,6 +4,23 @@ Participantes:
 - Hernandez Sanchez Oscar José
 - Madera Baldovinos Erika Yusset
 
+Para ejecutar la parte 2 utilizamos los ejemplos de las notas de laboratorio.
+Solamente que los renombramos para que pudiera ejecutarse correctamente. Los ejemplos renombrados son los sig:
+
+dataC = %{:radio => 16.8}
+dataT = %{:base => 20, :altura => 6}
+dataR = %{:base => 50, :altura => 8}
+dataTP = %{:base1 => 14.5, :base2 => 20.4, :altura => 4.1}
+
+pid = spawn(GetBack, :getBack, [])
+send(pid, {self(), :circle, dataC})
+send(pid, {self(), :triangle, dataT})
+send(pid, {self(), :rectangle, dataR})
+send(pid, {self(), :trapezoid, dataTP})
+flush()
+
+Nota: Solo se reemplazaron los nombres de los atoms de base y altura ya que los de los ejemplos son diferentes.
+
 🌷 Instrucciones de ejecución para Parte 3 🌷
 
 El programa está hecho en Java, se utilizó la versión 14.0.2, pero debería funcionar
