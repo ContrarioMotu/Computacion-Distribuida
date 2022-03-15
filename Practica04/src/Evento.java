@@ -1,3 +1,6 @@
+/**
+ * Clase que modela un evento.
+ */
 public class Evento{
     
     private String nombre;
@@ -6,6 +9,11 @@ public class Evento{
 
     private int fin;
 
+    /**
+     * Constructor para eventos que recibe el nombre, inicio
+     * y fin del evento. El inicio y fin deben ser enteros mayores a 0
+     * además de que el fin debe ser mayor que el inicio.
+     */
     public Evento(String nombre, int inicio, int fin) throws Exception{
 
         if(fin <= inicio){
@@ -22,30 +30,51 @@ public class Evento{
 
     }
 
+    /**
+     * Método para obtener el nombre del evento.
+     */
     public String getNombre(){
         return this.nombre;
     }
 
+    /**
+     * Método para obtener el inicio del evento.
+     */
     public int getInicio(){
         return this.inicio;
     }
 
+    /**
+     * Método para obtener el fin del evento.
+     */
     public int getFin(){
         return this.fin;
     }
 
+    /**
+     * Método para asignar un nuevo nombre al evento.
+     */
     public void setNombre(String n){
         this.nombre = n;
     }
     
+    /**
+     * Método para asignar un inicio nombre al evento.
+     */
     public void setInicio(int i){
         this.inicio = i;
     }
 
+    /**
+     * Método para asignar un nuevo fin al evento.
+     */
     public void setFin(int f){
         this.fin = f;
     }
 
+    /**
+     * Método para comparar dos eventos mediante su final.
+     */
     public int compareTo(Evento pr){
         if(this.fin == pr.fin){
             return 0;
@@ -58,6 +87,9 @@ public class Evento{
         return -1;
     }
 
+    /**
+     * Método para imprimir la información del evento.
+     */
     @Override
     public String toString(){
         return this.nombre + "(" + this.inicio + ", " + this.fin + ")";

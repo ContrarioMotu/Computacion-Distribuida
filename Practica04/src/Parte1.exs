@@ -5,6 +5,7 @@
 # Madera Baldovinos Erika Yusset
 
 defmodule Practica3 do
+
   # Función para leer los mensajes recibidos:
   #     (a) Si recibe una tupla con el átomo :pid deberá imprimir lo siguiente:
   #         "Hola PIDA, soy PIDB." donde PIDA es el pid que te manden, y
@@ -26,6 +27,10 @@ defmodule Practica3 do
   end
 end
 
+
+# Líneas necesarias para:
+#       1. Spawnear n procesos de la práctica 3.
+#       2. Mandar a cada proceso spawneado el mensaje {:pid, self()}.
 n = 4
 Enum.to_list(1..n)
 |> Enum.map(fn _ -> spawn(&Practica3.recibe/0) end)

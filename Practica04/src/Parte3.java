@@ -10,6 +10,9 @@ public class Parte3 {
 
     private LinkedList<Evento> schedule = new LinkedList<Evento>();
 
+    /**
+     * Método para leer los eventos de un archivo.
+     */
     private void leerEventos(String path){
 
         try{
@@ -42,14 +45,19 @@ public class Parte3 {
         }
     }
 
+    /**
+     * Método greedy para encontrar la secuencia de eventos compatibles más larga.
+     */
     public void schedule(){
         LinkedList<Evento> eventosOrdenados = new LinkedList<Evento>(eventos);
 
+        //Ordenando los eventos mediante su final.
         eventosOrdenados.sort((p, q) -> p.compareTo(q));
 
         Evento pFinal = eventosOrdenados.getFirst();
         this.schedule.add(pFinal);
 
+        //Agregando los eventos compatibles.
         for(Evento p : eventosOrdenados){
             if(p.getInicio() >= pFinal.getFin()){
 
@@ -62,10 +70,17 @@ public class Parte3 {
         
     }
 
+    /**
+     * Método para obtener la secuencia de eventos compatibles más larga.
+     */
     public LinkedList<Evento> getSchedule(){
         return this.schedule;
     }
 
+    /**
+     * Método para la representación "gráfica" (jejeje) de los eventos junto con su
+     * inicio y fin.
+     */
     @Override
     public String toString(){
 
@@ -106,6 +121,10 @@ public class Parte3 {
         return s;
     }
 
+    /**
+     * Método para la representación "gráfica" (jejeje) de la secuencia de eventos
+     * compatibles más larga, así como su inicio y fin.
+     */
     public String toStringSchedule(){
 
         int nombreMasLargo = 1;
