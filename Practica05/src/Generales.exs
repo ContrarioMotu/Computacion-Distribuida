@@ -1,5 +1,13 @@
+# Participantes:
+# Angel Alcántara Valdés
+# Mauricio Ayala Morales
+# Hernández Sanchez Oscar Jose
+# Madera Baldovinos Erika Yusset
+
+# Parte 2 de la práctica.
 defmodule Generales do
 
+  # Función para mandar mensajes y que cada proceso empiece a recibir mensajes.
   def generales(id, noLider \\ self(), hora \\ nil, lider \\ nil) do
 
     estado = %{:id => id, :noLider => noLider, :hora => hora, :lider => lider}
@@ -17,6 +25,7 @@ defmodule Generales do
       end
   end
 
+  #Función que permite al Lider recibir mensajes de confirmación del No Lider.
   def recibe_lider(estado) do
     import Map, only: [get: 3]
     receive do
@@ -25,6 +34,7 @@ defmodule Generales do
     end
   end
 
+  #Función que permite al no Lider recibir mensajes de ataque del Lider.
   def recibe_no_lider(estado) do
     receive do
       {lider, hora} -> IO.puts("Recibi mensaje : Atacamos a las #{inspect(hora)}")
