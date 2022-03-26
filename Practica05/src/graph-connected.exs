@@ -25,7 +25,7 @@
 defmodule Graphs do
 
   def inicia do
-	estado_inicial = %{:raiz => false, :procesado => false, :cuenta => 0, :hijos => [], :io => self()}
+	estado_inicial = %{:raiz => false, :procesado => false, :cuenta => 0, :hijos => []}
     recibe_mensaje(estado_inicial)
   end
 
@@ -61,7 +61,6 @@ defmodule Graphs do
   end
 
   #Run
-  #sender de converge es id
   def procesa_mensaje({:converge, cuenta_de_hijo, sender}, estado) do
 	estado = converge(cuenta_de_hijo, sender, estado)
 	{:ok, estado}
@@ -113,8 +112,6 @@ defmodule Graphs do
 
 	  #Si ya respondieron todos los vecinos y ninguno es un hijo este proceso
 	  #debe de ser una hoja, se dispara un converge
-	  #IO.puts "res #{estado[:respondieron]} hijos #{estado[:hijos]}"
-	  #IO.inspect estado[:hijos], label: "hijos"
 	  if estado[:respondieron] == [] and estado[:hijos] == [] do
 		send(estado[:padre], {:converge, 1, estado[:id]})
 		estado
@@ -123,19 +120,13 @@ defmodule Graphs do
 		estado
 	  end
 	else
-	  #IO.puts "id passed #{n_id} estado: #{estado[:id]}"
 	  if estado[:raiz] do
 		Enum.map(estado[:vecinos], fn vecino -> send(vecino, {:mensaje, self(), estado[:id]}) end)
 		Map.put(estado, :procesado, true)
 	  else
 		if n_id != nil do
 		  
-		  #if n_id == estado[:id] do
-		  #  IO.inspect estado, label: "pater"
-		  #end
-
-		  #send(sender_proc, {:padre, n_id})
-		  send(sender_proc, {:padre, estado[:id]})##change here
+		  send(sender_proc, {:padre, estado[:id]})
 		  Enum.map(estado[:vecinos], fn vecino -> send(vecino, {:mensaje, self(), estado[:id]}) end)
 		  estado = Map.put(estado, :padre, sender_proc)
 		  estado = Map.put(estado, :respondieron, Enum.filter(estado[:respondieron], fn x -> x != sender_proc end))
