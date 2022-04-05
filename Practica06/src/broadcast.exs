@@ -1,3 +1,8 @@
+# Participantes:
+# Angel Alcántara Valdés
+# Mauricio Ayala Morales
+# Hernández Sanchez Oscar Jose
+# Madera Baldovinos Erika Yusset
 defmodule Broadcast do
 
   def inicia do

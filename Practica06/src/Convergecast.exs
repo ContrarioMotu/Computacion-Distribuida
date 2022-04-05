@@ -1,10 +1,18 @@
+# Participantes:
+# Angel Alcántara Valdés
+# Mauricio Ayala Morales
+# Hernández Sanchez Oscar Jose
+# Madera Baldovinos Erika Yusset
 defmodule Convergecast do
 
+  # Función para "inicializar" un nodo con un estado por default.
   def inicia do
     estado_inicial = %{:padre => nil, :hijos => [], :input => []}
     recibe_mensaje(estado_inicial)
   end
 
+  # Función que permite a un nodo recibir mensajes, tanto para cambiar su estado
+  # como para recibir el input de sus hijos.
   def recibe_mensaje(estado) do
     receive do
       mensaje -> nuevo_estado = procesa_mensaje(mensaje, estado)
@@ -12,22 +20,33 @@ defmodule Convergecast do
     end
   end
 
+  # Función para asignar el padre a un nodo.
   def procesa_mensaje({:padre, padre}, estado) do
     Map.put(estado, :padre, padre)
   end
 
+  # Función para asignar los hijos a un nodo.
   def procesa_mensaje({:hijos, hijos}, estado) do
     Map.put(estado, :hijos, hijos)
   end
-
+  # Función para asignar el input a un nodo.
   def procesa_mensaje({:input, input}, estado) do
     Map.put(estado, :input, input)
   end
 
+  # Función para inicializar la implementación de Convergecast desde las hojas.
   def procesa_mensaje({:inicia}, estado) do
     sumaListas(estado)
   end
 
+  # Función que permite a un nodo recibir el input de todos sus hijos.
+  # Cunado recibe todas las listas de sus hijos:
+  #     1.- Suma los elementos de todas las listas de sus hijos y
+  #         el resultado lo añade a su propia lista.
+  #     2.- Agrega la longitud de cada una de las listas de sus hijos
+  #         y la multiplica por 2.
+  #     3.- Si el nodo es la raíz devuelve su lista, en cualquier otro caso
+  #         manda su lista a su padre.
   def procesa_mensaje({:suma, hijo, l}, estado) do
     %{:padre => padre, :hijos => hijos, :input => input} = estado
 
@@ -35,7 +54,7 @@ defmodule Convergecast do
     estado = Map.put(estado, :input, [l|input])
 
     if (Map.get(estado, :hijos) == []) do
-      longitudHijos = Enum.map(Map.get(estado,:input), fn x -> length(x) end)
+      longitudHijos = Enum.map(Map.get(estado,:input), fn x -> length(x)*2 end)
       i = List.flatten(Map.get(estado,:input))
       i = Enum.sum(i)
       i = [i|longitudHijos]
@@ -51,6 +70,7 @@ defmodule Convergecast do
     estado
   end
 
+  # Función que permite a las hojas mandar el input a sus padres.
   def sumaListas(estado) do
     %{:padre => padre, :hijos => hijos, :input => input} = estado
 
