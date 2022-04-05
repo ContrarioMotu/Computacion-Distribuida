@@ -1,50 +1,96 @@
 defmodule Convergecast do
 
-  def sumaListas(parent, children, input \\ []) do
-    estado = %{:parent => parent, :children => children, :input => input}
-
-    if (children == []) do
-      send(parent, {self(), input})
-    else
-      recibe(estado, [], [])
-    end
-
+  def inicia do
+    estado_inicial = %{:padre => nil, :hijos => [], :input => []}
+    recibe_mensaje(estado_inicial)
   end
 
-  def recibe(estado, rC, cL) do
-    %{:parent => parent, :children => children, :input => input} = estado
-
-      receivedChildren = rC
-      childrenLenghts = cL
-
+  def recibe_mensaje(estado) do
     receive do
-      {:pid, lista} -> receivedChildren|:pid
-                       childrenLenghts|(length(lista)*2)
-                       input++lista
+      mensaje -> nuevo_estado = procesa_mensaje(mensaje, estado)
+      recibe_mensaje(nuevo_estado)
+    end
+  end
 
-      if (Enum.all?(children, fn x -> Enum.member?(receivedChildren, x) end) ) do
-        input = Enum.sum(input) ++ childrenLenghts
-        if(parent == nil) do
-          IO.puts("#{inspect(input)}")
-        else
-          send(parent, {self(), input})
-        end
+  def procesa_mensaje({:padre, padre}, estado) do
+    Map.put(estado, :padre, padre)
+  end
 
+  def procesa_mensaje({:hijos, hijos}, estado) do
+    Map.put(estado, :hijos, hijos)
+  end
+
+  def procesa_mensaje({:input, input}, estado) do
+    Map.put(estado, :input, input)
+  end
+
+  def procesa_mensaje({:inicia}, estado) do
+    sumaListas(estado)
+  end
+
+  def procesa_mensaje({:suma, hijo, l}, estado) do
+    %{:padre => padre, :hijos => hijos, :input => input} = estado
+
+    estado = Map.put(estado, :hijos, hijos -- [hijo])
+    estado = Map.put(estado, :input, [l|input])
+
+    if (Map.get(estado, :hijos) == []) do
+      longitudHijos = Enum.map(Map.get(estado,:input), fn x -> length(x) end)
+      i = List.flatten(Map.get(estado,:input))
+      i = Enum.sum(i)
+      i = [i|longitudHijos]
+      Map.put(estado, :input, i)
+
+      if(padre == nil) do
+        IO.puts("#{inspect(i)}")
+      else
+        send(padre, {:suma, self(), i})
       end
 
-      recibeRaiz(estado, receivedChildren, childrenLenghts)
+    end
+    estado
+  end
+
+  def sumaListas(estado) do
+    %{:padre => padre, :hijos => hijos, :input => input} = estado
+
+    if (hijos == []) do
+      send(padre, {:suma, self(), input})
     end
 
+    estado
   end
 
 end
 
-# p = [parent, children, input]
+pr = spawn(Convergecast, :inicia, [])
+p0 = spawn(Convergecast, :inicia, [])
+p1 = spawn(Convergecast, :inicia, [])
+p2 = spawn(Convergecast, :inicia, [])
+p3 = spawn(Convergecast, :inicia, [])
+p4 = spawn(Convergecast, :inicia, [])
+p5 = spawn(Convergecast, :inicia, [])
 
-pr = spawn(Convergecast, :sumaListas, [nil, [p0, p1]])
-p0 = spawn(Convergecast, :sumaListas, [pr, [p2, p3, p4]])
-p1 = spawn(Convergecast, :sumaListas, [pr, [p5]])
-p2 = spawn(Convergecast, :sumaListas, [p0, [], [1]])
-p3 = spawn(Convergecast, :sumaListas, [p0, [], [2]])
-p4 = spawn(Convergecast, :sumaListas, [p0, [], [3]])
-p5 = spawn(Convergecast, :sumaListas, [p1, [], [4]])
+send(p0, {:padre, pr})
+send(p1, {:padre, pr})
+send(p2, {:padre, p0})
+send(p3, {:padre, p0})
+send(p4, {:padre, p0})
+send(p5, {:padre, p1})
+
+send(pr, {:hijos, [p0, p1]})
+send(p0, {:hijos, [p2, p3, p4]})
+send(p1, {:hijos, [p5]})
+
+send(p2, {:input, [1]})
+send(p3, {:input, [2]})
+send(p4, {:input, [3]})
+send(p5, {:input, [4]})
+
+send(pr, {:inicia})
+send(p0, {:inicia})
+send(p1, {:inicia})
+send(p2, {:inicia})
+send(p3, {:inicia})
+send(p4, {:inicia})
+send(p5, {:inicia})
