@@ -1,3 +1,8 @@
+# Participantes:
+# Angel Alcántara Valdés
+# Mauricio Ayala Morales
+# Hernández Sanchez Oscar Jose
+# Madera Baldovinos Erika Yusset
 defmodule King do
 
   ##hyperparameter is the amount of failures
@@ -68,13 +73,14 @@ defmodule King do
   end
   def consensus_even(state, round) do
     king_maj = if round == state[:id] do
-                IO.puts "Yo #{round} soy el rey, mi preferencia es #{state[:majority]}"
+                IO.puts "Soy: #{state[:id]}, elegí a #{state[:pref]} en la ronda #{round}."
                 Enum.map(state[:neighbours], fn n -> send(n, {:maj, state[:majority]}) end)
                 state[:majority]
                else
                  receive do
                    {:maj, choice} -> choice
                    _ ->  state[:majority] # Should be unreachable
+                   IO.puts "Soy: #{state[:id]}, elegí a #{state[:pref]} en la ronda #{round}."
                  end
                end
     new_preference= if state[:multiplicity] > (1+ length(state[:neighbours])) / 2 + @failures do
@@ -86,7 +92,7 @@ defmodule King do
     state = Map.put(state, :pref, new_preference)
 
     if round == @failures + 1 do
-      IO.puts "elegí #{state[:pref]}, soy:#{state[:id]}"
+      IO.puts "--> Soy: #{state[:id]}, elegí a #{state[:pref]}."
     else
       consensus_odd(state, round+1)
     end
@@ -99,10 +105,14 @@ b = spawn(fn -> King.init(2, 2) end)
 c = spawn(fn -> King.init(3, 1) end)
 d = spawn(fn -> King.init(4, 7) end)
 
+Process.sleep(1000)
+
 send(a, {:neighbours, [b,c,d], [2,3,4]})
 send(b, {:neighbours, [a,c,d], [1,3,4]})
 send(c, {:neighbours, [a,b,d], [1,2,4]})
 send(d, {:neighbours, [a,b,c], [1,2,3]})
+
+Process.sleep(1000)
 
 send(a, {:start})
 send(b, {:start})
