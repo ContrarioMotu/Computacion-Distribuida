@@ -1,10 +1,4 @@
-# Participantes:
-# Angel Alcántara Valdés
-# Mauricio Ayala Morales
-# Hernández Sanchez Oscar Jose
-# Madera Baldovinos Erika Yusset
-
-# Parte 1 de la práctica, usando lo que vimos en clase
+# Parte 1 de la práctica
 
 defmodule Graphs do
 

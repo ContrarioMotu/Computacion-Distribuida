@@ -1,9 +1,3 @@
-# Participantes:
-# Angel Alcántara Valdés
-# Mauricio Ayala Morales
-# Hernández Sanchez Oscar Jose
-# Madera Baldovinos Erika Yusset
-
 defmodule Practica01 do
 
 	# Función que calcula el cuadruple de un número.

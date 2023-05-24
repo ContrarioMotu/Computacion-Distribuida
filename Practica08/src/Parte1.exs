@@ -1,8 +1,3 @@
-# Participantes:
-# Angel Alcántara Valdés
-# Mauricio Ayala Morales
-# Hernández Sanchez Oscar Jose
-# Madera Baldovinos Erika Yusset
 defmodule LeaderElection do
 
   # Función para "inicializar" un proceso con un estado por default.

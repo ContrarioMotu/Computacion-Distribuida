@@ -1,9 +1,3 @@
-# Participantes:
-# Angel Alcántara Valdés
-# Mauricio Ayala Morales
-# Hernández Sanchez Oscar Jose
-# Madera Baldovinos Erika Yusset
-
 ##Parte 1.2
 #Lo primero que tenemos que observar es que es imposible determinar si una gráfica
 #es conexa si no se tiene información del sistema.
@@ -80,7 +74,7 @@ defmodule Graphs do
 	#Si ya se recibió mensaje de todos los hijos, mandar a padre
 	#si aun no, solo anotar y seguir esperando
 	#si raíz y todos hijos => decide
-	
+
 	estado = if not Map.has_key?(estado, :clones) do
 	  Map.put(estado, :clones, estado[:hijos])
 	else
@@ -125,7 +119,7 @@ defmodule Graphs do
 		Map.put(estado, :procesado, true)
 	  else
 		if n_id != nil do
-		  
+
 		  send(sender_proc, {:padre, estado[:id]})
 		  Enum.map(estado[:vecinos], fn vecino -> send(vecino, {:mensaje, self(), estado[:id]}) end)
 		  estado = Map.put(estado, :padre, sender_proc)

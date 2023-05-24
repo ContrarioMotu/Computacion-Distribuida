@@ -1,8 +1,3 @@
-# Participantes:
-# Angel Alcántara Valdés
-# Mauricio Ayala Morales
-# Hernández Sanchez Oscar Jose
-# Madera Baldovinos Erika Yusset
 defmodule King do
 
   ##hyperparameter is the amount of failures

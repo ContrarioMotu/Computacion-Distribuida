@@ -1,8 +1,3 @@
-# Participantes:
-# Angel Alcántara Valdés
-# Mauricio Ayala Morales
-# Hernández Sanchez Oscar Jose
-# Madera Baldovinos Erika Yusset
 defmodule Convergecast do
 
   # Función para "inicializar" un nodo con un estado por default.

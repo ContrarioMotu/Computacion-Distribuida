@@ -1,9 +1,3 @@
-# Participantes:
-# Angel Alcántara Valdés
-# Mauricio Ayala Morales
-# Hernández Sanchez Oscar Jose
-# Madera Baldovinos Erika Yusset
-
 defmodule Practica02 do
   #1 Función que dado un número n y una cadena, regresa una lista con n
   # veces la cadena.

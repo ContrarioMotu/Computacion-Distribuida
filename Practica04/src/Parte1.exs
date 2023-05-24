@@ -1,9 +1,3 @@
-# Participantes:
-# Angel Alcántara Valdés
-# Mauricio Ayala Morales
-# Hernández Sanchez Oscar Jose
-# Madera Baldovinos Erika Yusset
-
 defmodule Practica3 do
 
   # Función para leer los mensajes recibidos:

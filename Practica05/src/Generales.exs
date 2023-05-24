@@ -1,10 +1,3 @@
-# Participantes:
-# Angel Alcántara Valdés
-# Mauricio Ayala Morales
-# Hernández Sanchez Oscar Jose
-# Madera Baldovinos Erika Yusset
-
-# Parte 2 de la práctica.
 defmodule Generales do
 
   # Función para mandar mensajes y que cada proceso empiece a recibir mensajes.
